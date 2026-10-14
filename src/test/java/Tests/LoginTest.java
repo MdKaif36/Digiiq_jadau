@@ -17,17 +17,25 @@ public class LoginTest extends BaseTest {
     Loginpage loginpage = new Loginpage();
 
     @Test
-    public void test1() {
+    public void test() {
+        // check homepage open
         Assert.assertTrue(homepage.state().waitForDisplayed(), "Homepage open");
         homepage.clickUserIcon();
+        // login page open
         Assert.assertTrue(loginpage.state().waitForDisplayed(), "Login page open");
+        // check country code shown
         Assert.assertTrue(loginpage.countryCode(), "Country code is displayed");
+        // check xicon is clickable or not
         Assert.assertTrue(loginpage.xiconClickable(), "X icon is clickable");
+
         // loginpage.clickOutSidePopup();
-        // Assert.assertTrue(loginpage.popup(), "Popup is not visible after outside
-        // click");
+        // Assert.assertTrue(loginpage.popup(), "Popup is not visible after outsideclick");
+
+        // check mobile number placeholder
         Assert.assertEquals(loginpage.mobileNumberPlaceholder("Enter mobile number"), "Enter mobile number");
-        Assert.assertTrue(loginpage.signinClickOnEnter(),"sign in is working on press Enter");
+        // check sign in enable using "Enter"
+        Assert.assertTrue(loginpage.signinByPressEnter(),"sign in is working on press Enter");
+
 
 
     }
