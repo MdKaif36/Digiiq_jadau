@@ -49,12 +49,7 @@
         <artifactId>awaitility</artifactId>
         <version>4.2.0</version>
     </dependency>
-    <dependency>
 
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-        <version>LATEST</version>
-    </dependency>
 
     <dependency>
         <groupId>ch.qos.logback</groupId>
