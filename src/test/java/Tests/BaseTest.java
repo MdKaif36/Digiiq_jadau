@@ -7,6 +7,11 @@ import static aquality.selenium.browser.AqualityServices.getBrowser;
 
 public class BaseTest {
 
+    /*static {
+        System.setProperty("browserName", "edge");
+        System.setProperty("webdriver.edge.driver", "C:\\driver\\msedgedriver.exe");
+    }*/
+
     public final String url = "https://sfcc-staging.jadau.com/";
 
     @BeforeMethod
