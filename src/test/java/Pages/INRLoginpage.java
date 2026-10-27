@@ -9,6 +9,8 @@ import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
+import java.time.Duration;
+
 public class INRLoginpage extends Form {
 
     public ILabel code = AqualityServices.getElementFactory().getLabel(
@@ -40,6 +42,7 @@ public class INRLoginpage extends Form {
         super(By.xpath("//h2[normalize-space()='Log In']"), "Loginpage");
     }
 
+
     public ILabel emailLoginlink = AqualityServices.getElementFactory().getLabel(
             By.xpath("//span[@class='alternate-link-email alternate-login-option']"),"login with email"
     );
@@ -58,6 +61,10 @@ public class INRLoginpage extends Form {
 
     public ILink registerNow = AqualityServices.getElementFactory().getLink(
             By.xpath("//a[normalize-space()='Register Now']"),"Click on register link");
+
+    public IButton validateOtpBtn  = getElementFactory().getButton(By.xpath("//button[@id='validate-otp-login']"),"validate otp btn");
+
+    Homepage homepage= new Homepage();
 
     public Boolean countryCode() {
         return code.state().isDisplayed();
@@ -97,6 +104,31 @@ public class INRLoginpage extends Form {
         signBtn.state().waitForDisplayed();
         signBtn.click();
         return verificationOtpPopup.state().waitForDisplayed();
+
+    }
+
+    public ITextBox getOtpTextbox(int i){
+        return getElementFactory().getTextBox(By.xpath(String.format("//*[@id='otp-digit-%d']",i)),"opt textbox");
+    }
+
+    public void loginWithRegisterMobileNumber(String mobileNo){
+        mobileNumberTextbox.clearAndType(mobileNo);
+        signBtn.state().waitForDisplayed();
+        signBtn.click();
+        for(int i=1;i<=4;i++){
+            getOtpTextbox(i).clearAndType("8");
+        }
+
+        validateOtpBtn.click();
+
+        AqualityServices.getConditionalWait().waitFor(
+                ()-> homepage.state().waitForDisplayed(),
+                Duration.ofSeconds(15), Duration.ofMillis(300),
+                "Homepage is not displayed"
+        );
+    }
+
+    public void loginWithRegisterEmialId(){
 
     }
 

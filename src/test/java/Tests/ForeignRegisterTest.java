@@ -56,19 +56,35 @@ public class ForeignRegisterTest extends BaseTest {
             homepage.clickUserIcon();
             foreignLogInPage.clickOnRegisterNow();
 
+            // fill all details and mob_no less than 10 digit
+            foreignRegisterPage.enterUserDetails("Md","Kaif","21077801","mdkaif8036@gmail.com","Password@786","Password@786");
+            Assert.assertTrue(foreignRegisterPage.isMobileErrorMsgShown()," Error msg not shown when less than 10 digit mobile-no enter");
+
+            foreignRegisterPage.clickXicon();
+            homepage.clickUserIcon();
+            foreignLogInPage.clickOnRegisterNow();
+
             // fill all details except email
             foreignRegisterPage.enterUserDetails("Md","Kaif",entry.getValue(),"","Password@786","Password@786");
             Assert.assertTrue(foreignRegisterPage.isEmailErrorMsgShown(),"empty email error msg not show");
-
             foreignRegisterPage.clickXicon();
+
             homepage.clickUserIcon();
             foreignLogInPage.clickOnRegisterNow();
 
             // fill all details except password
             foreignRegisterPage.enterUserDetails("Md","Kaif",entry.getValue(),"mdkaif8036@gmail.com","","Password@786");
             Assert.assertTrue(foreignRegisterPage.isPasswordErrorMsgShown(),"empty password error msg not show");
-
             foreignRegisterPage.clickXicon();
+
+            homepage.clickUserIcon();
+            foreignLogInPage.clickOnRegisterNow();
+
+            // fill all details and password less than 8 character
+            foreignRegisterPage.enterUserDetails("Md","Kaif",entry.getValue(),"mdkaif8036@gmail.com","","Password@786");
+            Assert.assertTrue(foreignRegisterPage.isPasswordErrorMsgShown(),"empty password error msg not show");
+            foreignRegisterPage.clickXicon();
+
             homepage.clickUserIcon();
             foreignLogInPage.clickOnRegisterNow();
 
@@ -113,89 +129,3 @@ public class ForeignRegisterTest extends BaseTest {
     }
 
 }
-
-/*
-homepage.closePrivacyIcon();
-        homepage.selectCurrency("USD");
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-        // open create account pop-up
-        Assert.assertTrue(foreignRegisterPage.state().waitForDisplayed(),"create user page is open");
-        //Assert.assertEquals(foreignRegisterPage.returnCountryCode(),"+1");
-
-        // enter empty all fields
-        foreignRegisterPage.enterUserDetails("","","","","","");
-        Assert.assertTrue(foreignRegisterPage.errorMsgOnFirstname(),"error msg not show on empty");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill all details except first name
-        foreignRegisterPage.enterUserDetails("","Kaif","2107780187","mdkaif8036@gmail.com","Password@786","Password@786");
-        Assert.assertTrue(foreignRegisterPage.errorMsgOnFirstname(),"error msg not show on empty");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill all details except mob_no
-        foreignRegisterPage.enterUserDetails("Md","Kaif","","mdkaif8036@gmail.com","Password@786","Password@786");
-        Assert.assertTrue(foreignRegisterPage.isMobileErrorMsgShown()," empty mobile error msg not show");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill all details except email
-        foreignRegisterPage.enterUserDetails("Md","Kaif","2107780187","","Password@786","Password@786");
-        Assert.assertTrue(foreignRegisterPage.isEmailErrorMsgShown(),"empty email error msg not show");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill all details except password
-        foreignRegisterPage.enterUserDetails("Md","Kaif","2107780187","mdkaif8036@gmail.com","","Password@786");
-        Assert.assertTrue(foreignRegisterPage.isPasswordErrorMsgShown(),"empty password error msg not show");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill all details except confirm password
-        foreignRegisterPage.enterUserDetails("Md","Kaif","2107780187","mdkaif8036@gmail.com","Password@786","");
-        Assert.assertTrue(foreignRegisterPage.isConfirmPasswordErrorMsgShown(),"empty confirm password error msg not show");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill all details and password mismatch
-        foreignRegisterPage.enterUserDetails("Md","Kaif","2107780187","mdkaif8036@gmail.com","Password@786","Password@785");
-        Assert.assertTrue(foreignRegisterPage.isConfirmPasswordErrorMsgShown(),"empty confirm password error msg not show");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill already exist mobile number and differ user details
-        foreignRegisterPage.enterUserDetails("Md","Kaif","6307780187","mdkaif8136@gmail.com","Password@786","Password@786");
-        Assert.assertTrue(foreignRegisterPage.isMobileErrorMsgShown()," empty mobile error msg not show");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill already exist email and different mob_no user details
-        foreignRegisterPage.enterUserDetails("Md","Kaif","2107780187","mdkaif8036@gmail.com","Password@786","Password@786");
-        Assert.assertTrue(foreignRegisterPage.isEmailErrorMsgShown()," empty mobile error msg not show");
-
-        foreignRegisterPage.clickXicon();
-        homepage.clickUserIcon();
-        foreignLogInPage.clickOnRegisterNow();
-
-        // fill new user details
-        foreignRegisterPage.enterUserDetails("Md","Kaif","2107780187","mdkaif8136@gmail.com","Password@786","Password@786");
-        Assert.assertTrue(foreignRegisterPage.isVerificationPopUpshown(),"verification pop-up not shown");
- */

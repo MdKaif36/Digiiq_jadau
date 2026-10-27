@@ -3,8 +3,11 @@ package Pages;
 import aquality.selenium.browser.AqualityServices;
 import aquality.selenium.elements.interfaces.IButton;
 import aquality.selenium.elements.interfaces.ILabel;
+import aquality.selenium.elements.interfaces.ILink;
 import aquality.selenium.forms.Form;
 import org.openqa.selenium.By;
+
+import java.time.Duration;
 
 public class Homepage extends Form {
 
@@ -16,7 +19,7 @@ public class Homepage extends Form {
 
     public ILabel currencyDropdown = getElementFactory().getLabel(
             By.xpath("//div[@class='search-group-section']//span[@class='selectedText']"),
-            "currency dropdown");;
+            "currency dropdown");
 
     // Dropdown trigger (the "₹INR" button near the search icon)
     private final ILabel currencyTrigger = getElementFactory().getLabel(
@@ -25,6 +28,9 @@ public class Homepage extends Form {
 
     public ILabel userIconAfterLogin = getElementFactory().getLabel(
             By.xpath("//div[@class='header-account-section']//a[@aria-label='My Account']//*[name()='svg']"),"click on user icon after login");
+
+    public ILink shopNavigation = getElementFactory().getLink(
+            By.xpath("//a[@class='nav-link'][normalize-space()='SHOP']"),"Shop icon");
 
 
     public Homepage() {
@@ -47,6 +53,7 @@ public class Homepage extends Form {
                 "Currency option " + code);
 
     }
+    // //div[@class='custom-dropdown-menu dropdown-glassmorphic']//span[@class='option-text'][normalize-space()='$USD']
 
     public boolean loginSuccesfully(String code){
         currencyTrigger.click();
@@ -59,10 +66,26 @@ public class Homepage extends Form {
     }
 
     public void clickCurrencySelector(String code ){
-        currencyDropdown.getJsActions().click();
+        AqualityServices.getBrowser().waitForPageToLoad();
+        currencyDropdown.state().waitForClickable();
+        currencyDropdown.click();
         ILabel option = currencyOption(code);
-        option.state().waitForDisplayed();             // wait for menu to render
-        option.getJsActions().click();
+        option.state().waitForDisplayed();
+        option.click();
+
+        AqualityServices.getConditionalWait().waitFor(
+                () -> currencyDropdown.getText().contains(code),
+                Duration.ofSeconds(15), Duration.ofMillis(300),
+                "Currency did not change to " + code);
+
+        AqualityServices.getBrowser().waitForPageToLoad();
+
+    }
+
+
+
+    public void clickOnShop(){
+        shopNavigation.click();
     }
 
 
