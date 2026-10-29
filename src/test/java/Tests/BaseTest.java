@@ -1,8 +1,12 @@
 package Tests;
 
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import aquality.selenium.browser.AqualityServices;
+
+import java.time.Duration;
+
 import static aquality.selenium.browser.AqualityServices.getBrowser;
 
 public class BaseTest {
@@ -13,6 +17,11 @@ public class BaseTest {
     }*/
 
     public final String url = "https://sfcc-staging.jadau.com/";
+
+    WebDriverWait wait = new WebDriverWait(
+            AqualityServices.getBrowser().getDriver(),
+            Duration.ofSeconds(1)
+    );
 
     @BeforeMethod
     public void setup() {

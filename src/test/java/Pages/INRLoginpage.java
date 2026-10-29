@@ -44,7 +44,7 @@ public class INRLoginpage extends Form {
 
 
     public ILabel emailLoginlink = AqualityServices.getElementFactory().getLabel(
-            By.xpath("//span[@class='alternate-link-email alternate-login-option']"),"login with email"
+            By.xpath("//span[contains(text(),'Use Email ID')]"),"login with email"
     );
 
     public ILabel emailLocator = AqualityServices.getElementFactory().getLabel(
@@ -100,7 +100,6 @@ public class INRLoginpage extends Form {
 
     public boolean enterValidMobileNumber(){
         mobileNumberTextbox.clearAndType("6307780187");
-        //mobileNumberTextbox.sendKeys("6307780187");
         signBtn.state().waitForDisplayed();
         signBtn.click();
         return verificationOtpPopup.state().waitForDisplayed();
@@ -111,8 +110,21 @@ public class INRLoginpage extends Form {
         return getElementFactory().getTextBox(By.xpath(String.format("//*[@id='otp-digit-%d']",i)),"opt textbox");
     }
 
-    public void loginWithRegisterMobileNumber(String mobileNo){
-        mobileNumberTextbox.clearAndType(mobileNo);
+    public void loginWithRegisterMobileNumber(String mobileNoOREmailID){
+        boolean isEmail = mobileNoOREmailID.contains("@");
+        if(isEmail){
+            emailLoginlink.state().waitForClickable();
+            emailLoginlink.getJsActions().click();
+            AqualityServices.getConditionalWait().waitFor(
+                    ()-> emailLocator.state().waitForDisplayed()
+            );
+
+            EmailTextbox.clearAndType(mobileNoOREmailID);
+        }
+        else{
+            mobileNumberTextbox.clearAndType(mobileNoOREmailID);
+        }
+
         signBtn.state().waitForDisplayed();
         signBtn.click();
         for(int i=1;i<=4;i++){
@@ -128,9 +140,7 @@ public class INRLoginpage extends Form {
         );
     }
 
-    public void loginWithRegisterEmialId(){
 
-    }
 
     public boolean MobileNumber0_9(){
         mobileNumberTextbox.clearAndType("00000");

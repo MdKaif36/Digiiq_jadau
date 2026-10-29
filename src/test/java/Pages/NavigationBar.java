@@ -19,7 +19,6 @@ public class NavigationBar extends Form {
 
 
     public int getPreviousQuantity(){
-        //System.out.println(cartQuantity.state().waitForExist());
         return Integer.parseInt(cartQuantity.getText());
     }
 
