@@ -9,7 +9,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 @Listeners(ScreenshotListener.class)
-public class CheckoutWithLoginTest extends BaseTest {
+public class CartTest extends BaseTest {
 
         Homepage homepage = new Homepage();
         INRLoginpage inrLoginpage = new INRLoginpage();
@@ -20,7 +20,7 @@ public class CheckoutWithLoginTest extends BaseTest {
         CheckoutPage checkoutPage = new CheckoutPage();
 
         @Test
-        public void checkoutWithLoginTest() throws InterruptedException {
+        public void cartTest() throws InterruptedException {
                 homepage.closePrivacyIcon();
                 homepage.clickUserIcon();
                 inrLoginpage.loginWithRegisterMobileNumber("mdkaif8036@gmail.com");
@@ -136,6 +136,11 @@ public class CheckoutWithLoginTest extends BaseTest {
                 Assert.assertEquals(cartPage.getTotalProductAmount(),
                                 utils.parseINRCurrency(cartPage.totalAmount.getText()));
 
+                for(int i=1;i<=productOnCart;i++){
+                        cartPage.decreaseQuantityBtn(i);
+                }
+
+
                 // checkout btn
                 // cartPage.checkoutBtn.getJsActions().scrollIntoView();
                 Assert.assertTrue(cartPage.checkoutBtn.state().waitForDisplayed(), "checkout btn is not displayed");
@@ -166,13 +171,13 @@ public class CheckoutWithLoginTest extends BaseTest {
                                 "term and conditions is not displayed");
 
                 cartPage.shippingCharge.getJsActions().scrollIntoView();
-                cartPage.shipping_Return.click();
+                cartPage.shipping_Return.getJsActions().click();
                 Assert.assertTrue(cartPage.shipping_ReturnContent.state().waitForDisplayed(),
                                 "shipping and return content is not displayed");
 
                 cartPage.term_Conditions.getJsActions().scrollIntoView();
                 ;
-                cartPage.term_Conditions.click();
+                cartPage.term_Conditions.getJsActions().click();
                 Assert.assertTrue(cartPage.term_ConditionsContent.state().waitForDisplayed(),
                                 "term and conditions content is not displayed");
 
